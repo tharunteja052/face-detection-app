@@ -2,21 +2,23 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import face_recognition
 import os
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
-CORS(app)
+CORS(app) 
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Dummy user data (replace with your database)
 users = {
     'PersonA': {
         'name': 'Person A',
         'info': 'Information about Person A',
-        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('personA.jpg'))[0]
+        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('PersonA.jpg'))[0]
     },
     'PersonB': {
         'name': 'Person B',
         'info': 'Information about Person B',
-        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('personB.jpg'))[0]
+        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('PersonB.jpg'))[0]
     },
 }
 
@@ -57,9 +59,12 @@ def face_detection():
     if not face_data:
         return jsonify({'error': 'Face not detected'}), 400
 
+    socketio.emit('face_data', face_data)
+    
     return jsonify(face_data)
 
 # Run the Flask app
 if __name__ == '__main__':
     # Use a random port for development
-    app.run(debug=True)
+    socketio.run(app, debug=True)
+    #app.run(debug=True)

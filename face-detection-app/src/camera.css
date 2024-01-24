@@ -1,0 +1,17 @@
+
+.camera-container {
+    text-align: center;
+    padding: 20px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.hidden-canvas {
+    display: none;
+}
+  

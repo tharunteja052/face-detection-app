@@ -1,17 +1,9 @@
-import React from 'react';
-import './App.css';
-import Camera from './Pages/Camera';
+import React, { useState, useRef, useEffect } from 'react';
+import '../camera.css';
 
-const App = () => {
 
-  return(
-    <div className='app-container'>
-      <h1>Face Dectection App</h1>
-      <Camera />
-    </div>
-  );
-
-  /*const [videoStream, setVideoStream] = useState(null);
+const Camera = () => {
+  const [videoStream, setVideoStream] = useState(null);
   const [info, setInfo] = useState(null);
   const canvasRef = useRef(null);
 
@@ -50,8 +42,14 @@ const App = () => {
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Fix the typo here (new ImageCapture instead of new imageCapture)
+    let imageCapture;
+
     video.addEventListener('loadeddata', async () => {
-      const imageCapture = new ImageCapture(videoStream.getVideoTracks()[0]);
+      // Use videoStream.current here
+      imageCapture = new ImageCapture(video.captureStream().getVideoTracks()[0]);
+
+      //imageCapture = new ImageCapture(videoStream.current.getVideoTracks()[0]);
       const bitmap = await imageCapture.grabFrame();
 
       canvas.width = bitmap.width;
@@ -81,10 +79,11 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <h1>Face Detection App</h1>
+    <div className="camera-container">
+      <h1>Face Detection Camera</h1> 
+      {videoStream && <video ref={videoStream} width="640" height="480" autoPlay />}
+
       <button onClick={handleScan}>Scan Face</button>
-      <button type="button" class="btn btn-primary">Primary</button>
 
       {info && (
         <div>
@@ -92,9 +91,10 @@ const App = () => {
           <p>{info.info}</p>
         </div>
       )}
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
+      <canvas ref={canvasRef} className="hidden-canvas" />
     </div>
-  );*/
+  );
 };
 
-export default App;
+export default Camera;
+
