@@ -1,21 +1,22 @@
 from flask import Flask, jsonify, request
-from flask_cors import CORS  # Import CORS from flask_cors
+from flask_cors import CORS
 import face_recognition
 import os
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app)
+
 # Dummy user data (replace with your database)
 users = {
     'PersonA': {
         'name': 'Person A',
         'info': 'Information about Person A',
-        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('temp_image.jpg'))[0]
+        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('personA.jpg'))[0]
     },
     'PersonB': {
         'name': 'Person B',
         'info': 'Information about Person B',
-        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('temp_image.jpg'))[0]
+        'encoding': face_recognition.face_encodings(face_recognition.load_image_file('personB.jpg'))[0]
     },
 }
 
