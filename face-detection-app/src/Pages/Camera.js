@@ -81,7 +81,7 @@ const Camera = () => {
   return (
     <div className="camera-container">
       <h1>Face Detection Camera</h1> 
-      {videoStream && <video ref={videoStream} width="640" height="480" autoPlay />}
+      {videoStream && <video ref={videoStream} width="640" height="480" />}
 
       <button onClick={handleScan}>Scan Face</button>
 
